@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "166280225864",
+    "firebase_url": "https://grapevine-71458.firebaseio.com",
+    "project_id": "grapevine-71458",
+    "storage_bucket": "grapevine-71458.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166280225864:android:38915d074f3b6f9c6c647d",
+        "android_client_info": {
+          "package_name": "com.example.grapevine_solutions"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "166280225864-4ngvskltn599j6fg93q01sno2qfn1g7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCjI0s5A8woGNmXOYquoCfLi3o88OsPqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "166280225864-4ngvskltn599j6fg93q01sno2qfn1g7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
