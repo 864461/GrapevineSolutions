@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/theme/AppRoutes.dart';
+import '../theme/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class OpeningView extends StatelessWidget{
+
+  OpeningView({this.auth,this.onSignedIn});
+  final BaseAuth auth;
+  final VoidCallback onSignedIn;
+
   @override
   Widget build(BuildContext context){
     final mq = MediaQuery.of(context);

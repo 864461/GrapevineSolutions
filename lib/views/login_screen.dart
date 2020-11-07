@@ -2,8 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/theme/AppRoutes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../theme/auth.dart';
+import '';
 
 class Login extends StatefulWidget {
+  Login({this.auth,this.onSignedIn});
+  final BaseAuth auth;
+  final VoidCallback onSignedIn;
+
   @override
   _LoginViewState createState() => _LoginViewState();
 }
@@ -119,20 +125,18 @@ class _LoginViewState extends State<Login> {
         ),
         onPressed: () async {
            try {
-            // UserCredential result = await FirebaseAuth.instance
-            //     .signInWithEmailAndPassword(
-            //         email: _emailController.text,
-            //         password: _passwordController.text);
-            // User firebaseUser = result.user;
+           String userId = await widget.auth.signInWithEmailAndPassword(emailController.text, passwordController.text,);
+           print("Signed in : $userId");
 
-            User user =
-                (await FirebaseAuth.instance.signInWithEmailAndPassword(
-              email: emailController.text,
-              password: passwordController.text,
-            )).user;
-            if (user != null) {
-              Navigator.of(context).pushNamed(AppRoutes.authMenu);
-            }
+            // User user =
+            //     (await FirebaseAuth.instance.signInWithEmailAndPassword(
+            //   email: emailController.text,
+            //   password: passwordController.text,
+            // )).user;
+            widget.onSignedIn();
+            // if (userId != null) {
+            //   Navigator.of(context).pushNamed(AppRoutes.authMenu);
+            // }
           } catch (e) {
             print(e);
             emailController.text = "";

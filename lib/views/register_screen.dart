@@ -1,13 +1,19 @@
 import 'package:flutter/cupertino.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/main.dart';
 import 'package:grapevine_solutions/theme/AppRoutes.dart';
 import 'package:toast/toast.dart';
-
+import 'package:grapevine_solutions/theme/auth.dart';
 
 
 class Register extends StatefulWidget {
+  Register({this.auth,this.onRegister});
+  final BaseAuth auth;
+  final VoidCallback onRegister;
+
+
+
   @override
   _RegisterViewState createState() => _RegisterViewState();
 }
@@ -171,26 +177,31 @@ class _RegisterViewState extends State<Register> {
       Toast.show(message, context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
 
-    final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+    // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     registerNewUser(BuildContext context) async {
-      final User firebaseUser = (await _firebaseAuth
-              .createUserWithEmailAndPassword(
-                  email: emailController.text,
-                  password: passwordController.text)
-              .catchError((errMsg) {
-        displayToastMessage("Error" + errMsg.toString(), context);
-      })).user;
+      // final User firebaseUser = (await _firebaseAuth
+      //         .createUserWithEmailAndPassword(
+      //             email: emailController.text,
+      //             password: passwordController.text)
+      //         .catchError((errMsg) {
+      //   displayToastMessage("Error" + errMsg.toString(), context);
+      // })).user;
 
-      if (firebaseUser != null) {
+
+      String userId = await widget.auth.createUserWithEmailAndPassword(emailController.text, passwordController.text,);
+      print("Created user : $userId");
+
+      if (userId != null) {
 
         Map userDataMap = {
           "name": usernameController.text.trim(),
           "email": emailController.text.trim(),
         };
-        usersRef.child(firebaseUser.uid).set(userDataMap);
+        usersRef.child(userId).set(userDataMap);
         displayToastMessage(
             "Congratulation you have created An Account ", context);
-        Navigator.of(context).pushNamed(AppRoutes.authMenu);
+        widget.onRegister();
+        // Navigator.of(context).pushNamed(AppRoutes.authMenu);
       } else {
         displayToastMessage("New user account has not been created", context);
       }

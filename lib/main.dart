@@ -4,6 +4,8 @@ import 'package:grapevine_solutions/views/opening_screen.dart';
 import 'package:grapevine_solutions/theme/AppRoutes.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:grapevine_solutions/theme/auth.dart';
+import 'package:grapevine_solutions/theme/root_page.dart';
 
     void main() async{
       WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +21,7 @@ import 'package:firebase_core/firebase_core.dart';
           return new MaterialApp(
             title: 'OpeningScreen',
             routes: AppRoutes.define(),
-            home: OpeningView(),
+            home: new RootPage(auth: new Auth())
           );
         }
     }

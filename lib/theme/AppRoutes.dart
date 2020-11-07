@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/views/login_screen.dart';
 import 'package:grapevine_solutions/views/register_screen.dart';
 import 'package:grapevine_solutions/views/menu.dart';
+import 'auth.dart';
 
 class AppRoutes{
   AppRoutes._();
@@ -12,8 +13,8 @@ class AppRoutes{
 
   static Map<String, WidgetBuilder> define() {
     return {
-      authLogin: (context) => Login(),
-      authRegister: (context) => Register(),
+      authLogin: (context) => Login(auth: new Auth()),
+      authRegister: (context) => Register(auth: new Auth()),
       authMenu: (context) => menuScreen(),
     };
   }
