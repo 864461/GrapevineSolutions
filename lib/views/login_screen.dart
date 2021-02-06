@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/theme/AppRoutes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../theme/auth.dart';
 import '';
 
@@ -20,8 +19,6 @@ class _LoginViewState extends State<Login> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
-  // TextEditingController _emailController;
-  // TextEditingController _passwordController;
 
   bool isSubmitting = false;
 
@@ -127,16 +124,7 @@ class _LoginViewState extends State<Login> {
            try {
            String userId = await widget.auth.signInWithEmailAndPassword(emailController.text, passwordController.text,);
            print("Signed in : $userId");
-
-            // User user =
-            //     (await FirebaseAuth.instance.signInWithEmailAndPassword(
-            //   email: emailController.text,
-            //   password: passwordController.text,
-            // )).user;
             widget.onSignedIn();
-            // if (userId != null) {
-            //   Navigator.of(context).pushNamed(AppRoutes.authMenu);
-            // }
           } catch (e) {
             print(e);
             emailController.text = "";
