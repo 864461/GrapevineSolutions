@@ -35,6 +35,12 @@ class _RootPageState extends State<RootPage> {
     });
   }
 
+  void _signedOut() {
+    setState(() {
+      authStatus = AuthStatus.notSignedIn;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     switch (authStatus) {
@@ -45,7 +51,10 @@ class _RootPageState extends State<RootPage> {
         );
       case AuthStatus.signedIn:
         // Navigator.of(context).pushNamed(AppRoutes.authMenu);
-        return new menuScreen(auth: widget.auth);
+        return new menuScreen(
+          auth: widget.auth,
+        onSignedOut: _signedOut,
+        );
     }
   }
 }
