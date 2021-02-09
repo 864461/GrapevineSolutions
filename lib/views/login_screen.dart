@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/theme/AppRoutes.dart';
 import '../theme/auth.dart';
 import '';
+import 'package:grapevine_solutions/views/register_screen.dart';
 
 class Login extends StatefulWidget {
   Login({this.auth,this.onSignedIn});
@@ -27,27 +28,55 @@ class _LoginViewState extends State<Login> {
     final mq = MediaQuery.of(context);
 
     final logo = Image.asset(
-      "logo2.jpeg",
+      "image.png",
       //fit: BoxFit.scaleDown
       height: mq.size.height / 3,
     );
+
+
+    final signuptext = TextField(
+      decoration:InputDecoration(
+        border:InputBorder.none,
+          // style:TextStyle(fontSize:22,fontStyle:FontStyle.italic,color: Colors.black),
+        hintText:'Log-In',
+        hintStyle:TextStyle(
+          color: Colors.red,
+          fontSize:25,
+          fontStyle:FontStyle.italic,
+        ),
+      ),
+    );
+
+
+    final welcomeMessage = Center(
+      child:Text.rich(
+        TextSpan(children:<TextSpan>[
+          TextSpan(
+              text:'Hi there! Nice to see you again',
+              style:TextStyle(fontSize:18,color: Colors.black)
+          ),
+        ]
+        ),
+      ),
+    );
+
 
     final emailField = TextFormField(
       //enabled: isSubmitting,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
-      style: TextStyle(color: Colors.white),
-      cursorColor: Colors.white,
+      style: TextStyle(color: Colors.black),
+      cursorColor: Colors.black,
       decoration: InputDecoration(
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: Colors.black),
         ),
         //fillColor: Colors.red,
         hintText: "somethinf@example.com",
         labelText: "Email",
-        labelStyle: TextStyle(color: Colors.white),
+        labelStyle: TextStyle(color: Colors.black),
         hintStyle: TextStyle(
-          color: Colors.white,
+          color: Colors.black,
         ),
       ),
     );
@@ -58,18 +87,18 @@ class _LoginViewState extends State<Login> {
           obscureText: true,
           //enabled: isSubmitting,
           controller: passwordController,
-          style: TextStyle(color: Colors.white),
-          cursorColor: Colors.white,
+          style: TextStyle(color: Colors.black),
+          cursorColor: Colors.black,
           decoration: InputDecoration(
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+              borderSide: BorderSide(color: Colors.black),
             ),
             //fillColor: Colors.red,
             hintText: "Password",
             labelText: "Password",
-            labelStyle: TextStyle(color: Colors.white),
+            labelStyle: TextStyle(color: Colors.black),
             hintStyle: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),
@@ -100,14 +129,14 @@ class _LoginViewState extends State<Login> {
       padding: EdgeInsets.only(top: 10.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[emailField, passwordField],
+        children: <Widget>[signuptext,welcomeMessage,emailField, passwordField],
       ),
     );
 
     final loginButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular((25.0)),
-      color: Colors.white,
+      color: Colors.red,
       child: MaterialButton(
         minWidth: mq.size.width / 1.2,
         padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
@@ -153,16 +182,34 @@ class _LoginViewState extends State<Login> {
               style: Theme.of(context)
                   .textTheme
                   .subtitle1
-                  .copyWith(color: Colors.white),
+                  .copyWith(color: Colors.black),
             ),
             MaterialButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(AppRoutes.authRegister);
+                  Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    transitionDuration: Duration(seconds:2),
+                    transitionsBuilder:
+                        (context, animation, anotherAnimation, child) {
+                      return ScaleTransition(
+                        alignment:Alignment.topCenter,
+                        scale:animation,
+                          child:child,
+                      );
+                    },
+                    pageBuilder:(context,animation,animationTime){
+                      return Register();
+                    },
+                  ));
+
+
+                  // Navigator.of(context).pushNamed(AppRoutes.authRegister);
                 },
                 child: Text(
                   "Sign Up",
                   style: Theme.of(context).textTheme.subtitle1.copyWith(
-                      color: Colors.white,
+                      color: Colors.black,
                       decoration: TextDecoration.underline),
                 ))
           ],
@@ -171,7 +218,7 @@ class _LoginViewState extends State<Login> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.white,
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(

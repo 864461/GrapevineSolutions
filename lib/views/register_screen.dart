@@ -5,6 +5,7 @@ import 'package:grapevine_solutions/main.dart';
 import 'package:grapevine_solutions/theme/AppRoutes.dart';
 import 'package:toast/toast.dart';
 import 'package:grapevine_solutions/theme/auth.dart';
+import 'package:grapevine_solutions/views/login_screen.dart';
 
 
 class Register extends StatefulWidget {
@@ -33,25 +34,50 @@ class _RegisterViewState extends State<Register> {
     final mq = MediaQuery.of(context);
 
     final logo = Image.asset(
-      "logo2.jpeg",
+      "image.png",
       //fit: BoxFit.scaleDown
       height: mq.size.height / 4,
+    );
+    final signuptext = TextField(
+      decoration:InputDecoration(
+        border:InputBorder.none,
+        // style:TextStyle(fontSize:22,fontStyle:FontStyle.italic,color: Colors.black),
+        hintText:'Sign Up',
+        hintStyle:TextStyle(
+          color: Colors.red,
+          fontSize:25,
+          fontStyle:FontStyle.italic,
+        ),
+      ),
+    );
+
+
+    final welcomeMessage = Center(
+      child:Text.rich(
+        TextSpan(children:<TextSpan>[
+          TextSpan(
+              text:'Lets Get Started!',
+              style:TextStyle(fontSize:18,color: Colors.black)
+          ),
+        ]
+        ),
+      ),
     );
 
     final emailField = TextFormField(
       //enabled: isSubmitting,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.black),
       cursorColor: Colors.white,
       decoration: InputDecoration(
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: Colors.black),
         ),
         //fillColor: Colors.red,
         hintText: "somethinf@example.com",
         labelText: "Email",
-        labelStyle: TextStyle(color: Colors.white),
+        labelStyle: TextStyle(color: Colors.black),
         hintStyle: TextStyle(
           color: Colors.white,
         ),
@@ -62,18 +88,18 @@ class _RegisterViewState extends State<Register> {
       //enabled: isSubmitting,
       controller: usernameController,
       //keyboardType:  TextInputType.emailAddress,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.black),
       cursorColor: Colors.white,
       decoration: InputDecoration(
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: Colors.black),
         ),
         //fillColor: Colors.red,
         hintText: "John Doe",
         labelText: "User Name",
-        labelStyle: TextStyle(color: Colors.white),
+        labelStyle: TextStyle(color: Colors.black),
         hintStyle: TextStyle(
-          color: Colors.white,
+          color: Colors.black,
         ),
       ),
     );
@@ -84,18 +110,18 @@ class _RegisterViewState extends State<Register> {
           obscureText: true,
           //enabled: isSubmitting,
           controller: passwordController,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
           cursorColor: Colors.white,
           decoration: InputDecoration(
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+              borderSide: BorderSide(color: Colors.black),
             ),
             //fillColor: Colors.red,
             hintText: "Password",
             labelText: "Password",
-            labelStyle: TextStyle(color: Colors.white),
+            labelStyle: TextStyle(color: Colors.black),
             hintStyle: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),
@@ -125,38 +151,21 @@ class _RegisterViewState extends State<Register> {
           obscureText: true,
           //enabled: isSubmitting,
           controller: rePasswordController,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
           cursorColor: Colors.white,
           decoration: InputDecoration(
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+              borderSide: BorderSide(color: Colors.black),
             ),
             //fillColor: Colors.red,
             hintText: "Password",
             labelText: "Re-enter Password",
-            labelStyle: TextStyle(color: Colors.white),
+            labelStyle: TextStyle(color: Colors.black),
             hintStyle: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),
-        // Padding(
-        //   padding: EdgeInsets.all(2.0),
-        // ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.end,
-        //   children: <Widget>[
-        //     MaterialButton(
-        //       child:Text(
-        //         "Forgot Password",
-        //         style: Theme.of(context).textTheme.caption.copyWith(color:Colors.white),
-        //       ),
-        //       onPressed: (){
-        //         // Create forgot password form pop up
-        //       },
-        //     )
-        //   ],
-        // )
       ],
     );
 
@@ -165,6 +174,8 @@ class _RegisterViewState extends State<Register> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          signuptext,
+          welcomeMessage,
           usernameField,
           emailField,
           passwordField,
@@ -179,15 +190,6 @@ class _RegisterViewState extends State<Register> {
 
     // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     registerNewUser(BuildContext context) async {
-      // final User firebaseUser = (await _firebaseAuth
-      //         .createUserWithEmailAndPassword(
-      //             email: emailController.text,
-      //             password: passwordController.text)
-      //         .catchError((errMsg) {
-      //   displayToastMessage("Error" + errMsg.toString(), context);
-      // })).user;
-
-
       String userId = await widget.auth.createUserWithEmailAndPassword(emailController.text, passwordController.text,);
       print("Created user : $userId");
 
@@ -210,7 +212,7 @@ class _RegisterViewState extends State<Register> {
     final registerButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular((25.0)),
-      color: Colors.white,
+      color: Colors.red,
       child: MaterialButton(
         minWidth: mq.size.width / 1.2,
         padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
@@ -250,7 +252,8 @@ class _RegisterViewState extends State<Register> {
       children: <Widget>[
         registerButton,
         Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+          // padding: EdgeInsets.all(8.0),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -260,16 +263,33 @@ class _RegisterViewState extends State<Register> {
               style: Theme.of(context)
                   .textTheme
                   .subtitle1
-                  .copyWith(color: Colors.white),
+                  .copyWith(color: Colors.black),
             ),
             MaterialButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(AppRoutes.authLogin);
+                  Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        transitionDuration: Duration(seconds: 2),
+                        transitionsBuilder:
+                            (context, animation, animationTime, child) {
+                          return ScaleTransition(
+                            alignment: Alignment.topCenter,
+                            scale: animation,
+                            child: child,
+                          );
+                        },
+                        pageBuilder: (context, animation, animationTime) {
+                          return Login();
+                        },
+                      ));
+
+                  // Navigator.of(context).pushNamed(AppRoutes.authLogin);
                 },
                 child: Text(
-                  "Login in",
+                  "Log in",
                   style: Theme.of(context).textTheme.subtitle1.copyWith(
-                      color: Colors.white,
+                      color: Colors.black,
                       decoration: TextDecoration.underline),
                 ))
           ],
@@ -278,7 +298,7 @@ class _RegisterViewState extends State<Register> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.white,
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
