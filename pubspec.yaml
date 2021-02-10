@@ -17,6 +17,10 @@ dependencies:
   firebase_auth: ^0.18.1+2
   toast: ^0.1.5
   firebase_database: ^4.2.0
+  line_awesome_flutter: ^1.0.1
+  flutter_screenutil: ^4.0.3+1
+  animated_theme_switcher: ^1.0.9
+#  flutter_svg: ^0.17.3+1
 
   cupertino_icons: ^1.0.0
 
@@ -44,6 +48,8 @@ flutter:
     - logo6.jpeg
     - logo7.jpeg
     - image.png
+    - Profile_avatar_placeholder_large.png
+#    - addImage.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

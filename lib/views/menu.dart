@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/theme/AppRoutes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../theme/auth.dart';
+import 'package:grapevine_solutions/views/home_screen.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '';
 
 class menuScreen extends StatefulWidget {
@@ -12,9 +14,13 @@ class menuScreen extends StatefulWidget {
 
 
   @override _MenuViewState createState() => _MenuViewState();
+
+
 }
 
 class _MenuViewState extends State<menuScreen> {
+  int _currentIndex = 0;
+  final int defaultSelectedIndex = 0;
   // final _formKey = GlobalKey<FormState>();
 
   // @override
@@ -44,77 +50,51 @@ class _MenuViewState extends State<menuScreen> {
     //       } catch (e) {
     //         print(e);
     //       }
-    //
-    //       //Todo
-    //       // print('Login Pressed');
     //     },
     //   ),
     // );
-    //
-    // final bottom = Column(
-    //   mainAxisAlignment: MainAxisAlignment.start,
-    //   crossAxisAlignment: CrossAxisAlignment.stretch,
-    //   children: <Widget>[
-    //     loginButton,
-    //     Padding(
-    //       padding: EdgeInsets.all(8.0),
-    //     ),
-    //   ],
-    // );
-    //
-    // return Scaffold(
-    //   backgroundColor: Colors.white,
-    //   body: Form(
-    //     key: _formKey,
-    //     child: SingleChildScrollView(
-    //         padding: EdgeInsets.all(36),
-    //         child: Container(
-    //             height: mq.size.height,
-    //             child: Column(
-    //               mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //               children: <Widget>[
-    //                 Padding(
-    //                   padding: EdgeInsets.only(bottom: 70),
-    //                   child: bottom,
-    //                 ),
-    //               ],
-    //             ))),
-    //   ),
-    // );
-  @override
+
+
+  final List<Widget>_children =[
+       Homepage(),
+       Center(child: Text('Shifts')),
+       Center(child: Text('Search Shifts')),
+       Center(child: Text('Settings')),
+
+  ];
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
-
-
       ),
+      body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        // currentIndex: _currentIndex,
-        // onTap: (int index) {
-        //   setState(() {
-        //     _currentIndex = index;
-        //   });
-        // },
-        // currentIndex: 0, // this will be set when a new tab is tapped
+        currentIndex: _currentIndex,
+        onTap: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.red,
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.mail),
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.red,
             label: 'My Shifts',
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              backgroundColor: Colors.black,
+              backgroundColor: Colors.red,
               label:'Search Shifts'),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              backgroundColor: Colors.black,
+              backgroundColor: Colors.red,
               label: 'Settings')
         ],
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/views/login_screen.dart';
-import 'package:grapevine_solutions/views/opening_screen.dart';
+import 'package:grapevine_solutions/views/home_screen.dart';
 import 'auth.dart';
 import 'AppRoutes.dart';
 import 'package:grapevine_solutions/views/menu.dart';
