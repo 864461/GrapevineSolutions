@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/theme/AppRoutes.dart';
+import 'package:grapevine_solutions/views/provider.dart';
+import 'package:path_provider/path_provider.dart';
 import '../theme/auth.dart';
 import '';
 import 'package:grapevine_solutions/views/register_screen.dart';
 
 class Login extends StatefulWidget {
-  Login({this.auth,this.onSignedIn});
-  final BaseAuth auth;
+  Login({this.onSignedIn});
   final VoidCallback onSignedIn;
 
   @override
@@ -151,7 +152,8 @@ class _LoginViewState extends State<Login> {
         ),
         onPressed: () async {
            try {
-           String userId = await widget.auth.signInWithEmailAndPassword(emailController.text, passwordController.text,);
+             var auth = Provider.of(context).auth;
+           String userId = await auth.signInWithEmailAndPassword(emailController.text, passwordController.text,);
            print("Signed in : $userId");
             widget.onSignedIn();
           } catch (e) {

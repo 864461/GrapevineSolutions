@@ -20,6 +20,9 @@ dependencies:
   line_awesome_flutter: ^1.0.1
   flutter_screenutil: ^4.0.3+1
   animated_theme_switcher: ^1.0.9
+  flutter_svg: ^0.19.1
+  charts_flutter: ^0.9.0
+  path_provider: ^1.6.27
 #  flutter_svg: ^0.17.3+1
 
   cupertino_icons: ^1.0.0
@@ -40,16 +43,10 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - gravevineLogo1.jpeg
-    - logo2.jpeg
-    - logo3.jpeg
-    - logo4.jpeg
-    - logo5.jpeg
-    - logo6.jpeg
-    - logo7.jpeg
     - image.png
+    - addImage.png
     - Profile_avatar_placeholder_large.png
-#    - addImage.png
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

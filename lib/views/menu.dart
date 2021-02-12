@@ -4,12 +4,12 @@ import 'package:grapevine_solutions/theme/AppRoutes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../theme/auth.dart';
 import 'package:grapevine_solutions/views/home_screen.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grapevine_solutions/views/provider.dart';
 import '';
 
 class menuScreen extends StatefulWidget {
-  menuScreen({this.auth,this.onSignedOut});
-  final BaseAuth auth;
+  menuScreen({this.onSignedOut});
+  // final BaseAuth auth;
   final VoidCallback onSignedOut;
 
 
@@ -19,55 +19,51 @@ class menuScreen extends StatefulWidget {
 }
 
 class _MenuViewState extends State<menuScreen> {
+  _MenuViewState({this.auth,this.onSignedOut});
+  final BaseAuth auth;
+  final VoidCallback onSignedOut;
   int _currentIndex = 0;
   final int defaultSelectedIndex = 0;
-  // final _formKey = GlobalKey<FormState>();
-
-  // @override
-  // Widget build(BuildContext context) {
-    // final mq = MediaQuery.of(context);
-    //
-    // final loginButton = Material(
-    //   elevation: 5.0,
-    //   borderRadius: BorderRadius.circular((25.0)),
-    //   color: Colors.white,
-    //   child: MaterialButton(
-    //     minWidth: mq.size.width / 1.2,
-    //     padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
-    //     child: Text(
-    //       "Log Out",
-    //       textAlign: TextAlign.center,
-    //       style: TextStyle(
-    //         fontSize: 20.0,
-    //         color: Colors.black,
-    //         fontWeight: FontWeight.bold,
-    //       ),
-    //     ),
-    //     onPressed: () async {
-    //       try {
-    //          await widget.auth.signOut();
-    //         widget.onSignedOut();
-    //       } catch (e) {
-    //         print(e);
-    //       }
-    //     },
-    //   ),
-    // );
 
 
-  final List<Widget>_children =[
-       Homepage(),
-       Center(child: Text('Shifts')),
-       Center(child: Text('Search Shifts')),
-       Center(child: Text('Settings')),
+  // _MenuViewState(this._childrenTwo);
 
-  ];
+  void _signOut(BuildContext context) async{
+    try {
+           var auth = Provider.of(context).auth;
+               await auth.signOut();
+              onSignedOut();
+            } catch (e) {
+              print(e);
+            }
+  }
+
+
+
+    final List<Widget>_children = [
+      Homepage(),
+      Center(child: Text('Shifts')),
+      Center(child: Text('Search Shifts')),
+      Center(child: Text('Settings')),
+
+    ];
+
 
 
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text(''),
+        actions: <Widget> [
+          new FlatButton(
+            child: new Text("Log-Out",style: new TextStyle(fontSize:17,color: Colors.black)),
+            onPressed: () =>  _signOut(context),
+
+          )
+
+
+        ],
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

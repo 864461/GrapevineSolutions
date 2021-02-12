@@ -7,14 +7,19 @@ import 'package:flutter/material.dart';
 abstract class BaseAuth {
   Future<String> signInWithEmailAndPassword(String email, String password);
   Future<String> createUserWithEmailAndPassword(String email, String password);
-  Future<String> currentUser();
+  Future<String> currentUserUid();
   Future<void> signOut();
+  Future currentUser();
+  // Future getCurrentUser();
 }
 
 class Auth implements BaseAuth {
+
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
   Future<String> signInWithEmailAndPassword(
       String email, String password) async {
-    User user = (await FirebaseAuth.instance.signInWithEmailAndPassword(
+    User user = (await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     ))
@@ -24,7 +29,7 @@ class Auth implements BaseAuth {
 
   Future<String> createUserWithEmailAndPassword(
       String email, String password) async {
-    User user = (await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    User user = (await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     ))
@@ -33,16 +38,36 @@ class Auth implements BaseAuth {
   }
 
 
-  Future<String> currentUser() async{
+  Future<String> currentUserUid() async{
     // User user = (await FirebaseAuth.instance.currentUser());
     User user;
     FirebaseAuth.instance.authStateChanges().listen((User user) {
         user = user ;
     });
-    print("currentUser running :" + user.uid);
+    // print("currentUser running :" + user.uid);
     return user.uid;
 
   }
+
+  // Future getCurrentUser() async {
+  //    User user = await _firebaseAuth.currentUser();
+  //  return user;
+  // }
+
+
+  Future currentUser() async{
+    // User user = (await FirebaseAuth.instance.currentUser());
+    User user;
+    FirebaseAuth.instance.authStateChanges().listen((User user) {
+      user = user ;
+    });
+    // print("currentUser running :" + user.uid);
+    return user;
+
+  }
+
+
+
 
 
   Future<void> signOut() async {

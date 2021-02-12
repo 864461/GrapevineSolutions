@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/main.dart';
 import 'package:grapevine_solutions/theme/AppRoutes.dart';
+import 'package:grapevine_solutions/views/provider.dart';
 import 'package:toast/toast.dart';
 import 'package:grapevine_solutions/theme/auth.dart';
 import 'package:grapevine_solutions/views/login_screen.dart';
 
 
 class Register extends StatefulWidget {
-  Register({this.auth,this.onRegister});
-  final BaseAuth auth;
+  Register({this.onRegister});
   final VoidCallback onRegister;
 
 
@@ -190,7 +190,8 @@ class _RegisterViewState extends State<Register> {
 
     // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     registerNewUser(BuildContext context) async {
-      String userId = await widget.auth.createUserWithEmailAndPassword(emailController.text, passwordController.text,);
+      var auth = Provider.of(context).auth;
+      String userId = await auth.createUserWithEmailAndPassword(emailController.text, passwordController.text,);
       print("Created user : $userId");
 
       if (userId != null) {
