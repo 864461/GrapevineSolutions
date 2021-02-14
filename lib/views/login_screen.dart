@@ -8,8 +8,9 @@ import '';
 import 'package:grapevine_solutions/views/register_screen.dart';
 
 class Login extends StatefulWidget {
-  Login({this.onSignedIn});
+  Login({this.onSignedIn,this.notRegistered});
   final VoidCallback onSignedIn;
+  final VoidCallback notRegistered;
 
   @override
   _LoginViewState createState() => _LoginViewState();
@@ -20,6 +21,7 @@ class _LoginViewState extends State<Login> {
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
+
 
 
   bool isSubmitting = false;
@@ -187,23 +189,28 @@ class _LoginViewState extends State<Login> {
                   .copyWith(color: Colors.black),
             ),
             MaterialButton(
-                onPressed: () {
-                  Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    transitionDuration: Duration(seconds:2),
-                    transitionsBuilder:
-                        (context, animation, anotherAnimation, child) {
-                      return ScaleTransition(
-                        alignment:Alignment.topCenter,
-                        scale:animation,
-                          child:child,
-                      );
-                    },
-                    pageBuilder:(context,animation,animationTime){
-                      return Register();
-                    },
-                  ));
+                onPressed: () async {
+
+                  try {
+                    widget.notRegistered();
+                  } catch (e) {
+                  }
+                  // Navigator.push(
+                  // context,
+                  // PageRouteBuilder(
+                  //   transitionDuration: Duration(seconds:2),
+                  //   transitionsBuilder:
+                  //       (context, animation, anotherAnimation, child) {
+                  //     return ScaleTransition(
+                  //       alignment:Alignment.topCenter,
+                  //       scale:animation,
+                  //         child:child,
+                  //     );
+                  //   },
+                  //   pageBuilder:(context,animation,animationTime){
+                  //     return widget.notRegistered();
+                  //   },
+                  // ));
 
 
                   // Navigator.of(context).pushNamed(AppRoutes.authRegister);

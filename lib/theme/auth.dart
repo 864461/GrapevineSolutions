@@ -10,7 +10,7 @@ abstract class BaseAuth {
   Future<String> currentUserUid();
   Future<void> signOut();
   Future currentUser();
-  // Future getCurrentUser();
+  Future getCurrentData();
 }
 
 class Auth implements BaseAuth {
@@ -44,15 +44,14 @@ class Auth implements BaseAuth {
     FirebaseAuth.instance.authStateChanges().listen((User user) {
         user = user ;
     });
-    // print("currentUser running :" + user.uid);
     return user.uid;
 
   }
 
-  // Future getCurrentUser() async {
-  //    User user = await _firebaseAuth.currentUser();
-  //  return user;
-  // }
+  Future getCurrentData() async {
+     User user =  _firebaseAuth.currentUser;
+   return user;
+  }
 
 
   Future currentUser() async{

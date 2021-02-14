@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/views/login_screen.dart';
+import 'package:grapevine_solutions/views/register_screen.dart';
 import 'package:grapevine_solutions/views/home_screen.dart';
 import 'package:grapevine_solutions/views/provider.dart';
 import 'auth.dart';
 import 'AppRoutes.dart';
 import 'package:grapevine_solutions/views/menu.dart';
+
 
 
 class RootPage extends StatefulWidget {
@@ -15,7 +17,14 @@ class RootPage extends StatefulWidget {
   State<StatefulWidget> createState() => new _RootPageState();
 }
 
-enum AuthStatus { notSignedIn, signedIn }
+
+
+
+
+
+
+
+enum AuthStatus { notSignedIn, signedIn ,notRegistered,signedInProfile}
 
 class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.notSignedIn;
@@ -53,6 +62,11 @@ class _RootPageState extends State<RootPage> {
       authStatus = AuthStatus.notSignedIn;
     });
   }
+  void _notRegistered() {
+    setState(() {
+      authStatus = AuthStatus.notRegistered;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +74,18 @@ class _RootPageState extends State<RootPage> {
       case AuthStatus.notSignedIn:
         return new Login(
           onSignedIn: _signedIn,
+            notRegistered: _notRegistered,
         );
       case AuthStatus.signedIn:
         // Navigator.of(context).pushNamed(AppRoutes.authMenu);
         return new menuScreen(
         onSignedOut: _signedOut,
+        );
+      case AuthStatus.notRegistered:
+      // Navigator.of(context).pushNamed(AppRoutes.authMenu);
+        return  Register(
+          onRegister: _signedIn,
+          onSignedIn: _signedOut,
         );
     }
   }

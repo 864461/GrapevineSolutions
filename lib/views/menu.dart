@@ -4,6 +4,7 @@ import 'package:grapevine_solutions/theme/AppRoutes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../theme/auth.dart';
 import 'package:grapevine_solutions/views/home_screen.dart';
+import 'package:grapevine_solutions/views/shifts.dart';
 import 'package:grapevine_solutions/views/provider.dart';
 import '';
 
@@ -28,11 +29,11 @@ class _MenuViewState extends State<menuScreen> {
 
   // _MenuViewState(this._childrenTwo);
 
-  void _signOut(BuildContext context) async{
+  Future <void> _signOut(BuildContext context) async{
     try {
            var auth = Provider.of(context).auth;
                await auth.signOut();
-              onSignedOut();
+              widget.onSignedOut();
             } catch (e) {
               print(e);
             }
@@ -42,8 +43,8 @@ class _MenuViewState extends State<menuScreen> {
 
     final List<Widget>_children = [
       Homepage(),
-      Center(child: Text('Shifts')),
-      Center(child: Text('Search Shifts')),
+      Center(child: Text('My shifts')),
+      Shifts(),
       Center(child: Text('Settings')),
 
     ];
@@ -54,16 +55,21 @@ class _MenuViewState extends State<menuScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
-        actions: <Widget> [
-          new FlatButton(
-            child: new Text("Log-Out",style: new TextStyle(fontSize:17,color: Colors.black)),
+        centerTitle: true,
+        title: Text('GrapeVine Health Care'),
+        backgroundColor: Colors.black,
+        elevation: 4.0,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.ac_unit),
             onPressed: () =>  _signOut(context),
-
-          )
-
-
+          ),
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () =>  _signOut(context),
+          ),
         ],
+        leading: Icon(Icons.accessibility),
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -76,22 +82,23 @@ class _MenuViewState extends State<menuScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.black,
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.mail),
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.black,
             label: 'My Shifts',
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              backgroundColor: Colors.red,
+              backgroundColor: Colors.black,
               label:'Search Shifts'),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              backgroundColor: Colors.red,
-              label: 'Settings')
+              backgroundColor: Colors.black,
+              label: 'Settings'),
+
         ],
       ),
     );

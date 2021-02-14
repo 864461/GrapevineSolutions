@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/main.dart';
-import 'package:grapevine_solutions/theme/AppRoutes.dart';
+import 'package:grapevine_solutions/theme/root_page.dart';
 import 'package:grapevine_solutions/views/provider.dart';
 import 'package:toast/toast.dart';
 import 'package:grapevine_solutions/theme/auth.dart';
@@ -10,8 +10,9 @@ import 'package:grapevine_solutions/views/login_screen.dart';
 
 
 class Register extends StatefulWidget {
-  Register({this.onRegister});
+  Register({ this.onRegister,this.onSignedIn,});
   final VoidCallback onRegister;
+  final VoidCallback onSignedIn;
 
 
 
@@ -203,6 +204,7 @@ class _RegisterViewState extends State<Register> {
         usersRef.child(userId).set(userDataMap);
         displayToastMessage(
             "Congratulation you have created An Account ", context);
+        print("Registered : $userId");
         widget.onRegister();
         // Navigator.of(context).pushNamed(AppRoutes.authMenu);
       } else {
@@ -268,22 +270,27 @@ class _RegisterViewState extends State<Register> {
             ),
             MaterialButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        transitionDuration: Duration(seconds: 2),
-                        transitionsBuilder:
-                            (context, animation, animationTime, child) {
-                          return ScaleTransition(
-                            alignment: Alignment.topCenter,
-                            scale: animation,
-                            child: child,
-                          );
-                        },
-                        pageBuilder: (context, animation, animationTime) {
-                          return Login();
-                        },
-                      ));
+
+                  try {
+                    widget.onSignedIn();
+                  } catch (e) {
+                  }
+                  // Navigator.push(
+                  //     context,
+                  //     PageRouteBuilder(
+                  //       transitionDuration: Duration(seconds: 2),
+                  //       transitionsBuilder:
+                  //           (context, animation, animationTime, child) {
+                  //         return ScaleTransition(
+                  //           alignment: Alignment.topCenter,
+                  //           scale: animation,
+                  //           child: child,
+                  //         );
+                  //       },
+                  //       pageBuilder: (context, animation, animationTime) {
+                  //         return Login();
+                  //       },
+                  //     ));
 
                   // Navigator.of(context).pushNamed(AppRoutes.authLogin);
                 },

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/views/login_screen.dart';
 import 'package:grapevine_solutions/views/register_screen.dart';
 import 'package:grapevine_solutions/views/menu.dart';
+import 'package:grapevine_solutions/views/provider.dart';
 import 'auth.dart';
+import 'package:grapevine_solutions/theme/root_page.dart';
 
 class AppRoutes{
   AppRoutes._();

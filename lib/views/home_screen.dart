@@ -20,6 +20,18 @@ class HomepageState extends State<Homepage>{
   HomepageState({this.onSignedOut});
   final VoidCallback onSignedOut;
 
+  Future <void> _signOut(BuildContext context) async{
+    try {
+      var auth = Provider.of(context).auth;
+      await auth.signOut();
+      widget.onSignedOut();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -202,7 +214,7 @@ class HomepageState extends State<Homepage>{
             try {
               var auth = Provider.of(context).auth;
               await auth.signOut();
-              onSignedOut();
+              widget.onSignedOut();
             } catch (e) {
               print(e);
             }
@@ -227,10 +239,10 @@ class HomepageState extends State<Homepage>{
       child: Column(
         children: [
           FutureBuilder(
-            future: Provider.of(context).auth.currentUserUid(),
+            future: Provider.of(context).auth.getCurrentData(),
             builder: (context,snapshot){
               if(snapshot.connectionState == ConnectionState.done) {
-                return Text("${snapshot.data}");
+                return Text("${snapshot.data.email}");
               } else{
                  return CircularProgressIndicator();
               }

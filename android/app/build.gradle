@@ -29,6 +29,20 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 android {
     compileSdkVersion 29
 
+//
+    buildToolsVersion '29.0.0'
+
+    defaultConfig {
+        applicationId "com.dkm.example"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+//
+
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -44,6 +58,7 @@ android {
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     buildTypes {

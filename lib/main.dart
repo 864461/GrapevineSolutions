@@ -22,9 +22,11 @@ import 'package:grapevine_solutions/views/provider.dart';
           return Provider(
             auth:Auth(),
             child: MaterialApp(
+              debugShowCheckedModeBanner: false,
             title: 'OpeningScreen',
             routes: AppRoutes.define(),
-            home: RootPage())
+            home: RootPage(),
+            ),
           );
         }
     }
