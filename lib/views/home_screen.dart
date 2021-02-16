@@ -14,13 +14,15 @@ class Homepage extends StatefulWidget {
   Homepage({this.onSignedOut});
   final VoidCallback onSignedOut;
 
-  @override HomepageState createState() => HomepageState();
+  @override
+  HomepageState createState() => HomepageState();
 }
-class HomepageState extends State<Homepage>{
+
+class HomepageState extends State<Homepage> {
   HomepageState({this.onSignedOut});
   final VoidCallback onSignedOut;
 
-  Future <void> _signOut(BuildContext context) async{
+  Future<void> _signOut(BuildContext context) async {
     try {
       var auth = Provider.of(context).auth;
       await auth.signOut();
@@ -29,9 +31,6 @@ class HomepageState extends State<Homepage>{
       print(e);
     }
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -73,43 +72,65 @@ class HomepageState extends State<Homepage>{
       ],
     );
 
-
     final shifts = Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: FlatButton(
           padding: EdgeInsets.all(20),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           color: Color(0xFFF5F6F9),
           child: Row(
             children: [
               // SizedBox(width: 20),
-            Icon(
-            Icons.beenhere_outlined),
-              SizedBox(width:20),
+              Icon(Icons.beenhere_outlined),
+              SizedBox(width: 20),
               Expanded(
-                child: Text("Total Shifts"),
+                child: Text(
+                  "Total Shifts",
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               Expanded(
-                child: Text("8"),
+                child: Text(
+                  "8",
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               SizedBox(width: 20),
-              Icon(
-                  Icons.access_alarm_outlined),
-              SizedBox(width:20),
+              Icon(Icons.access_alarm_outlined),
+              SizedBox(width: 20),
               Expanded(
-                child: Text("Total Hours"),
+                child: Text(
+                  "Total Hours",
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               Expanded(
-                child: Text("72"),
+                child: Text(
+                  "72",
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               // Icon(Icons.arrow_forward_ios)
             ],
           ),
         ));
-
-
-
 
     final profile = Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -127,9 +148,19 @@ class HomepageState extends State<Homepage>{
               ),
               SizedBox(width: 20),
               Expanded(
-                child: Text("My Account"),
+                child: Text(
+                  "My Account",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-              Icon(Icons.arrow_forward_ios)
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.green,
+              )
             ],
           ),
         ));
@@ -150,9 +181,19 @@ class HomepageState extends State<Homepage>{
               ),
               SizedBox(width: 20),
               Expanded(
-                child: Text("Reference"),
+                child: Text(
+                  "Reference",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-              Icon(Icons.arrow_forward_ios)
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.green,
+              )
             ],
           ),
         ));
@@ -173,9 +214,19 @@ class HomepageState extends State<Homepage>{
               ),
               SizedBox(width: 20),
               Expanded(
-                child: Text("Documents"),
+                child: Text(
+                  "Documents",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-              Icon(Icons.arrow_forward_ios)
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.green,
+              )
             ],
           ),
         ));
@@ -196,9 +247,19 @@ class HomepageState extends State<Homepage>{
               ),
               SizedBox(width: 20),
               Expanded(
-                child: Text("Activities"),
+                child: Text(
+                  "Activities",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-              Icon(Icons.arrow_forward_ios)
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.green,
+              )
             ],
           ),
         ));
@@ -227,9 +288,19 @@ class HomepageState extends State<Homepage>{
               ),
               SizedBox(width: 20),
               Expanded(
-                child: Text("Log-Out"),
+                child: Text(
+                  "Log-Out",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-              Icon(Icons.arrow_forward_ios)
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.green,
+              )
             ],
           ),
         ));
@@ -240,14 +311,15 @@ class HomepageState extends State<Homepage>{
         children: [
           FutureBuilder(
             future: Provider.of(context).auth.getCurrentData(),
-            builder: (context,snapshot){
-              if(snapshot.connectionState == ConnectionState.done) {
-                return Text("${snapshot.data.email}");
-              } else{
-                 return CircularProgressIndicator();
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Text("${snapshot.data.displayName}");
+              } else {
+                return CircularProgressIndicator();
               }
             },
           ),
+          SizedBox(height: 40),
           profilePic,
           SizedBox(height: 40),
           shifts,

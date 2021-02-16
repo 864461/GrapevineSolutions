@@ -5,7 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../theme/auth.dart';
 import 'package:grapevine_solutions/views/home_screen.dart';
 import 'package:grapevine_solutions/views/shifts.dart';
+import 'package:grapevine_solutions/views/Myshift.dart';
 import 'package:grapevine_solutions/views/provider.dart';
+import 'package:grapevine_solutions/views/setting.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import '';
 
 class menuScreen extends StatefulWidget {
@@ -43,9 +46,9 @@ class _MenuViewState extends State<menuScreen> {
 
     final List<Widget>_children = [
       Homepage(),
-      Center(child: Text('My shifts')),
+      MyShifts(),
       Shifts(),
-      Center(child: Text('Settings')),
+      Settings(),
 
     ];
 
