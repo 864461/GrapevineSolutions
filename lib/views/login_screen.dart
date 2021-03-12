@@ -36,6 +36,77 @@ class _LoginViewState extends State<Login> {
       height: mq.size.height / 3,
     );
 
+    void showAlertDialog(BuildContext context) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            TextEditingController _emailControllerField =
+            TextEditingController();
+            return AlertDialog(
+              content: Container(
+                width: 1000/ 1.2,
+                height: 1000/ 4.5,
+                color: Colors.white,
+                child: Column(
+                  children: <Widget>[
+                    Text("Insert Reset Email:"),
+                    TextField(
+                      controller: _emailControllerField,
+                      decoration: InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                        hintText: "something@example.com",
+                        labelText: "Email",
+                        labelStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                        hintStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Material(
+                        elevation: 5.0,
+                        borderRadius: BorderRadius.circular(25.0),
+                        color: Color(0xff8c52ff),
+                        child: MaterialButton(
+                          minWidth: 20/ 2,
+                          padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
+                          child: Text(
+                            "Send Reset Email",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: () async {
+                            try {
+                              var auth = Provider.of(context).auth;
+                             await auth.sendPasswordResetEmail(emailController.text);
+                              Navigator.of(context).pop();
+                            } catch (e) {
+                              print(e);
+                              // TODO: Add snackbar reporting error
+                            }
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          });
+    }
+
+
 
     final signuptext = TextField(
       decoration:InputDecoration(
@@ -117,10 +188,10 @@ class _LoginViewState extends State<Login> {
                 style: Theme.of(context)
                     .textTheme
                     .caption
-                    .copyWith(color: Colors.white),
+                    .copyWith(color: Colors.black),
               ),
               onPressed: () {
-                // Create forgot password form pop up
+                showAlertDialog(context);
               },
             )
           ],

@@ -16,14 +16,6 @@ class RootPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _RootPageState();
 }
-
-
-
-
-
-
-
-
 enum AuthStatus { notSignedIn, signedIn ,notRegistered,signedInProfile}
 
 class _RootPageState extends State<RootPage> {
