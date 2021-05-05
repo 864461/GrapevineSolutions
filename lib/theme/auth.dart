@@ -11,6 +11,7 @@ abstract class BaseAuth {
   Future<void> signOut();
   Future currentUser();
   Future getCurrentData();
+  Future updateProfile(image);
   Future<String> sendPasswordResetEmail(String email);
 }
 
@@ -86,6 +87,19 @@ class Auth implements BaseAuth {
   //
   // }
 
+
+  Future updateProfile(image) async{
+    // User user = (await FirebaseAuth.instance.currentUser());
+    User user;
+    FirebaseAuth.instance.authStateChanges().listen((User user) {
+      user = user ;
+    });
+
+    user.updateProfile(photoURL: image);
+
+    return user;
+
+  }
 
 
 

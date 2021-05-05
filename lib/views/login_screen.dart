@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/theme/AppRoutes.dart';
 import 'package:grapevine_solutions/views/provider.dart';
+import 'package:toast/toast.dart';
 import 'package:path_provider/path_provider.dart';
 import '../theme/auth.dart';
 import '';
@@ -207,6 +208,11 @@ class _LoginViewState extends State<Login> {
       ),
     );
 
+    displayToastMessage(String message,BuildContext context){
+      Toast.show(message, context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+    }
+    String errMsg() => 'Amount should be greater than zero';
+
     final loginButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular((25.0)),
@@ -230,7 +236,9 @@ class _LoginViewState extends State<Login> {
            print("Signed in : $userId");
             widget.onSignedIn();
           } catch (e) {
-            print(e);
+             displayToastMessage("Incorrect fields please try Again  ",context);
+            print(e.errMsg());
+            displayToastMessage("Incorrect fields please try Again  ",context);
             emailController.text = "";
             passwordController.text = "";
           }

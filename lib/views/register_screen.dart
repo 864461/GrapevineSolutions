@@ -231,13 +231,13 @@ class _RegisterViewState extends State<Register> {
         onPressed: () {
 
           if(usernameController.text.length < 4){
-            displayToastMessage("User Name must constain atleast 3 characters ",context);
+            displayToastMessage("User Name must constain atleast 6 characters ",context);
           }
           else if(!emailController.text.contains("@")) {
             displayToastMessage("Email is not Valid ",context);
           }
           else if(passwordController.text.length < 6){
-            displayToastMessage("User Name must constain atleast 3 characters ",context);
+            displayToastMessage("Password must constain at least 6 characters ",context);
           }
           else if(rePasswordController.text != passwordController.text){
             displayToastMessage("Passwords are not the same  ",context);

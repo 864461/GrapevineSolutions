@@ -24,10 +24,11 @@ dependencies:
   charts_flutter: ^0.9.0
   path_provider: ^1.6.27
   cloud_firestore: ^0.14.4
+  firebase_storage: ^5.2.0
   font_awesome_flutter: ^8.11.0
   curved_navigation_bar: ^0.3.7
 #  flutter_svg: ^0.17.3+1
-
+  image_picker: ^0.6.7+11
   cupertino_icons: ^1.0.0
 
 

@@ -27,7 +27,7 @@ class Shift {
       this.userId
       );
 
-  // formatting for upload to Firbase when creating the Shift
+  // formatting for upload to Firebase when creating the Shift
   Map<String, dynamic> toJson() => {
     'hospital': hospital,
     'date': date,

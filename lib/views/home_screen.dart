@@ -1,14 +1,25 @@
 // import 'dart:html';
 
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import '';
 import '../theme/auth.dart';
 import 'package:grapevine_solutions/views/provider.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+
+
 
 class Homepage extends StatefulWidget {
   Homepage({this.onSignedOut});
@@ -22,6 +33,74 @@ class HomepageState extends State<Homepage> {
   HomepageState({this.onSignedOut});
   final VoidCallback onSignedOut;
 
+
+
+  File _imageFile;
+  final picker = ImagePicker();
+
+Future getImage(context) async {
+    final pickedFile = await picker.getImage(source: runtimeType == 1 ? ImageSource.camera : ImageSource.gallery);
+    setState(() {
+      _imageFile = File(pickedFile.path);
+    });
+    upload(context);
+
+}
+
+  Future upload(BuildContext context) async{
+
+      var auth = Provider.of(context).auth;
+      final user = await auth.getCurrentData();
+      final userid = user.uid;
+      String fileName = _imageFile.path;
+      Reference ref =
+      FirebaseStorage.instance.ref().child('uploads/$userid');
+      UploadTask uploadTask = ref.putFile(_imageFile);
+      TaskSnapshot taskSnapshot = await uploadTask;
+      taskSnapshot.ref.getDownloadURL().then(
+            (value) => print("Done: $value"),
+      );
+      getUserImage(context);
+    }
+
+    Image  _userUrl;
+ Future getUserImage(BuildContext context) async {
+    var auth = Provider.of(context).auth;
+    final user = await auth.getCurrentData();
+    final userid = user.uid;
+    final ref = FirebaseStorage.instance.ref().child('uploads/$userid');
+// no need of the file extension, the name will do fine.
+    var url = await ref.getDownloadURL();
+   Image userImage = Image.network(url);
+    print(url);
+   setState(() {
+     _userUrl = userImage;
+   });
+  }
+
+
+  userImage(){
+    if(_userUrl != null){
+      return _userUrl;
+    }else{
+      return "Profile_avatar_placeholder_large.png";
+    }
+  }
+
+
+
+ // String _setImage(String url) {
+ //   setLock();
+ //    if(url != null){
+ //      return url;
+ //    }else{
+ //      return "Profile_avatar_placeholder_large.png";
+ //    }
+ //
+ //    // print()
+ //  }
+
+
   Future<void> _signOut(BuildContext context) async {
     try {
       var auth = Provider.of(context).auth;
@@ -31,6 +110,9 @@ class HomepageState extends State<Homepage> {
       print(e);
     }
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +127,7 @@ class HomepageState extends State<Homepage> {
               children: [
                 CircleAvatar(
                   backgroundImage:
-                      AssetImage("Profile_avatar_placeholder_large.png"),
+                     new  AssetImage(userImage()),
                 ),
                 Positioned(
                   right: -12,
@@ -60,7 +142,9 @@ class HomepageState extends State<Homepage> {
                         side: BorderSide(color: Colors.white),
                       ),
                       color: Color(0xFFF5F6F9),
-                      onPressed: () {},
+                      onPressed: () {
+                        getImage(context);
+                      },
                       child: Icon(
                         Icons.add_a_photo,
                       ),
