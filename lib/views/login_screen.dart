@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:grapevine_solutions/theme/AppRoutes.dart';
 import 'package:grapevine_solutions/views/provider.dart';
 import 'package:toast/toast.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:path_provider/path_provider.dart';
 import '../theme/auth.dart';
 import '';
 import 'package:grapevine_solutions/views/register_screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Login extends StatefulWidget {
   Login({this.onSignedIn,this.notRegistered});
@@ -248,7 +250,27 @@ class _LoginViewState extends State<Login> {
         },
       ),
     );
-
+    void _showButtonPressDialog(BuildContext context, String provider) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('$provider Button Pressed!'),
+        backgroundColor: Colors.black26,
+        duration: Duration(milliseconds: 400),
+      ));
+    }
+    GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: <String>[
+        'email',
+        'https://www.googleapis.com/auth/contacts.readonly',
+      ],
+    );
+    Future<void> _handleSignIn() async {
+      try {
+        await _googleSignIn.signIn();
+        widget.onSignedIn();
+      } catch (error) {
+        print(error);
+      }
+    }
     final bottom = Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -267,6 +289,8 @@ class _LoginViewState extends State<Login> {
                   .subtitle1
                   .copyWith(color: Colors.black),
             ),
+
+
             MaterialButton(
                 onPressed: () async {
 
@@ -274,25 +298,6 @@ class _LoginViewState extends State<Login> {
                     widget.notRegistered();
                   } catch (e) {
                   }
-                  // Navigator.push(
-                  // context,
-                  // PageRouteBuilder(
-                  //   transitionDuration: Duration(seconds:2),
-                  //   transitionsBuilder:
-                  //       (context, animation, anotherAnimation, child) {
-                  //     return ScaleTransition(
-                  //       alignment:Alignment.topCenter,
-                  //       scale:animation,
-                  //         child:child,
-                  //     );
-                  //   },
-                  //   pageBuilder:(context,animation,animationTime){
-                  //     return widget.notRegistered();
-                  //   },
-                  // ));
-
-
-                  // Navigator.of(context).pushNamed(AppRoutes.authRegister);
                 },
                 child: Text(
                   "Sign Up",
@@ -302,8 +307,23 @@ class _LoginViewState extends State<Login> {
                 ))
           ],
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SignInButton(
+              Buttons.Google,
+              onPressed: () {
+                _handleSignIn();
+                _showButtonPressDialog(context, 'Google');
+              },
+            ),
+          ],
+
+        )
       ],
     );
+
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -312,7 +332,7 @@ class _LoginViewState extends State<Login> {
         child: SingleChildScrollView(
             padding: EdgeInsets.all(36),
             child: Container(
-                height: mq.size.height,
+                // height: mq.size.height,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
